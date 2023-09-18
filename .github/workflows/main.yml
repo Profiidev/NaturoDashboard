@@ -37,4 +37,5 @@ jobs:
           npm install --only=prod
           npm install vite
           npm run build
+          pm2 restart 0
       if: github.event_name != 'pull_request'

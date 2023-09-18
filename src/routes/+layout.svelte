@@ -23,7 +23,7 @@
 
 <style>
 	:global(:root) {
-		--navbar-color: rgb(30, 31, 34);
+		--navbar-color: rgb(255, 31, 34);
 		--navbar-width: 70px;
 
 		--content-color: rgb(49, 51, 54);
