@@ -23,7 +23,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Deploy using ssh
+    - if: github.event_name != 'pull_request'
+      name: Deploy using ssh
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -38,4 +39,3 @@ jobs:
           npm install vite
           npm run build
           pm2 restart 0
-      if: github.event_name != 'pull_request'
