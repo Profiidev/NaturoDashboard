@@ -23,8 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
     steps:
-    - if: github.event_name != 'pull_request'
-      name: Deploy using ssh
+    - name: Deploy using ssh
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
