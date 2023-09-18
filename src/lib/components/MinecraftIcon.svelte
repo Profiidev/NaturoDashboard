@@ -3,7 +3,7 @@
 </script>
 
 <div>
-  <img src={NaturoIcon} alt="">
+  <img draggable="false" src={NaturoIcon} alt="">
 </div>
 
 <style>
