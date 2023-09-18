@@ -1,11 +1,25 @@
-name: Node.js CD
+name: Node.js CI
 
 on:
+  pull_request:
+    branches: [ master ]
   push:
     branches: [ master ]
 
 jobs:
-  build:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 18
+      uses: actions/setup-node@v2
+      with:
+        node-version: 18.x
+    - run: npm i
+    - run: npm run build --if-present
+
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,3 +35,5 @@ jobs:
           git pull origin master
           git status
           npm install --only=prod
+          npm run build
+      if: github.event_name != 'pull_request'
