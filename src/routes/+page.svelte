@@ -4,7 +4,7 @@
 	import { get } from "svelte/store";
 
   const test = async () => {
-    fetch("http://localhost:5173/api", {method: "POST", body: JSON.stringify({token: get(token), app:"w", cmd:"w"})}).then(res => res.text()).then(res => console.log(res));
+    fetch("http://nacktebusen.de/api", {method: "POST", body: JSON.stringify({token: get(token), app:"w", cmd:"w"})}).then(res => res.text()).then(res => console.log(res));
   }
 </script>
 
