@@ -27,6 +27,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@types/node": "^20.6.3",
 		"pocketbase": "^0.18.0"
 	}
 }
