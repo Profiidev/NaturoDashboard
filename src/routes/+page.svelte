@@ -5,6 +5,7 @@
 
   const test = async () => {
     fetch("http://nacktebusen.de/api", {method: "POST", body: JSON.stringify({token: get(token), app:"w", cmd:"w"})}).then(res => res.text()).then(res => console.log(res));
+    console.log(get(token))
   }
 </script>
 
