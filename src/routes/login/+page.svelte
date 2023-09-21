@@ -34,7 +34,6 @@
 {#if $currentUser}
   <div class="flex-container">
     <div class="info-container">
-      <div class="info"></div>
       <p>Signed in as</p>
       <p>{$currentUser.username}</p>
       <button class="submit-btn signout" on:click={signOut}>Sign Out</button>
