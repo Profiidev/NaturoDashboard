@@ -43,6 +43,7 @@
 		--navbar-width: 70px;
 
 		--content-color: rgb(49, 51, 54);
+		font-family: 'JetBrains Mono', monospace;
 	}
 
 	.navbar-back {

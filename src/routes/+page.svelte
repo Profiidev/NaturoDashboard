@@ -1,20 +1,23 @@
 <script lang="ts">
-  import PleaseLogin from "$lib/components/PleaseLogin.svelte";
-  import { currentUser, token } from "$lib/pocketbase/pocketbase";
-	import { get } from "svelte/store";
+	import PleaseLogin from '$lib/components/PleaseLogin.svelte';
+	import { currentUser, token } from '$lib/pocketbase/pocketbase';
+	import { get } from 'svelte/store';
 
-  const test = async () => {
-    fetch("http://nacktebusen.de/api", {method: "POST", body: JSON.stringify({token: get(token), app:"w", cmd:"w"})}).then(res => res.text()).then(res => console.log(res));
-    console.log(get(token))
-  }
+	const test = async () => {
+		fetch('http://nacktebusen.de/api/cmd', {
+			method: 'POST',
+			body: JSON.stringify({ token: get(token), app: 'w', cmd: 'w' })
+		})
+			.then((res) => res.text())
+			.then((res) => console.log(res));
+	};
 </script>
 
 {#if $currentUser}
-  <h1>Dashboard</h1>
-  <button on:click={test}>Lol</button>
+	<h1>Dashboard</h1>
+	<button on:click={test}>Lol</button>
 {:else}
-  <PleaseLogin />
-  <button on:click={test}>Lol</button>
+	<PleaseLogin />
 {/if}
 
 <style>
