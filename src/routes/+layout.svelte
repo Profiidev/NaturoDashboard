@@ -1,8 +1,10 @@
 <script lang="ts">
 	import LoginIcon from '$lib/components/LoginIcon.svelte';
+	import LogoutIcon from '$lib/components/LogoutIcon.svelte';
 	import MinecraftIcon from '$lib/components/MinecraftIcon.svelte';
 	import MusicIcon from '$lib/components/MusicIcon.svelte';
 	import NaturoIcon from '$lib/components/NaturoIcon.svelte';
+	import { currentUser } from '$lib/pocketbase/pocketbase';
 </script>
 
 <div class="navbar-back">
@@ -27,9 +29,13 @@
 		</li>
 		<li class="login">
 			<a href="/login">
-				<LoginIcon/>
+				{#if $currentUser}
+					<LogoutIcon/>
+				{:else}
+					<LoginIcon/>
+				{/if}
 			</a>
-			<div class="tooltip">Log in</div>
+			<div class="tooltip">Log {$currentUser ? 'out' : 'in'}</div>
 		</li>
 	</ul>
 </div>
