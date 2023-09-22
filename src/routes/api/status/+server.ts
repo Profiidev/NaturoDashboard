@@ -45,12 +45,10 @@ export const POST: RequestHandler = async (e: RequestEvent) => {
 	
 	let result = execSync(`echo ${SECRET_SSH_PASSWORD} | sudo -S systemctl status ${app} | grep "Active: "`);
 	let status = 'stopped';
-	if (result.toString().indexOf(' active ')) {
-		console.log('active');
+	if (result.toString().indexOf(' active ') !== -1) {
 		status = 'running';
 	}
-	if (result.toString().indexOf(' inactive ')) {
-		console.log('inactive');
+	if (result.toString().indexOf(' inactive ') !== -1) {
 		status = 'stopped';
 	}
 		

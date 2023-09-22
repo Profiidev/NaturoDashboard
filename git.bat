@@ -7,3 +7,6 @@ git.exe add .
 git.exe commit -m %name%
 git.exe push --set-upstream origin %name%
 git.exe checkout master
+pause
+git.exe branch -d %name%
+git pull
