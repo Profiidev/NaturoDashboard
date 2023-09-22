@@ -12,7 +12,7 @@ const headers = {
 
 const cmds: any = {
 	musicbot: {
-		base: `echo ${SECRET_SSH_PASSWORD} | sudo systemctl `,
+		base: `echo ${SECRET_SSH_PASSWORD} | sudo -S systemctl `,
 		options: { start: 'start musicbot', stop: 'stop musicbot', restart: 'restart musicbot' }
 	},
 	lavalink: {
