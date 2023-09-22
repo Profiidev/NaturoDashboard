@@ -54,9 +54,8 @@ export const POST: RequestHandler = async (e: RequestEvent) => {
 	if (!isValid) {
 		return new Response(JSON.stringify({}), { status: 401, headers: headers });
 	}
-	console.log(`Incoming request from ${e.getClientAddress()} with app: ${app} and command: ${cmd}`);
-	console.log(`${cmds[app].base}${cmds[app].options[cmd]}`);
-	exec(`${cmds[app].base}${cmds[app].options[cmd]}`, (err, output) => {console.log(err)});
+	
+	exec(`${cmds[app].base}${cmds[app].options[cmd]}`, (err, output) => {});
 
 	return new Response(JSON.stringify({ message: 'Done' }), { status: 200, headers: headers });
 };

@@ -2,10 +2,14 @@
   import { token } from "$lib/pocketbase/pocketbase";
   import { get } from "svelte/store";
 	import { onMount } from "svelte";
+	import StartIcon from "./StartIcon.svelte";
+  import StopIcon from "./StopIcon.svelte";
+  import RestartIcon from "./RestartIcon.svelte";
 
   export let tabs: string[];
   let logs = ["Loading..."];
   let active = 'Musicbot';
+  let status = 'unknown';
 
   let firstTab = tabs.shift() as string;
   
@@ -16,6 +20,13 @@
 		})
 			.then((res) => res.json())
 			.then((res) => logs = res.logs);
+
+    fetch('http://nacktebusen.de/api/status', {
+			method: 'POST',
+			body: JSON.stringify({ token: get(token), app: active.toLowerCase() })
+		})
+			.then((res) => res.json())
+			.then((res) => status = res.status);
   }
 
   const updateData = () => {
@@ -32,13 +43,20 @@
     logs = ["Loading..."];
     fetchData();
   }
+
+  const controlClick = (action: string) => {
+    fetch('http://nacktebusen.de/api/control', {
+			method: 'POST',
+			body: JSON.stringify({ token: get(token), app: active.toLowerCase(), cmd: action })
+		})
+  }
 </script>
 
 <div class="selector">
-  <button class={active === firstTab ? 'active' : ''} on:click={() => tabClick(firstTab)}>{firstTab}</button>
+  <button class={active === firstTab ? 'active tab' : 'tab'} on:click={() => tabClick(firstTab)}>{firstTab}</button>
   {#each tabs as tab}
     <div class="space-w"></div>
-    <button class={active === tab ? 'active' : ''} on:click={() => tabClick(tab)}>{tab}</button>
+    <button class={active === tab ? 'active tab' : 'tab'} on:click={() => tabClick(tab)}>{tab}</button>
   {/each}
 </div>
 <div class="console scrollbar">
@@ -48,6 +66,18 @@
   {/each}
   <div class="space"></div>
 </div>
+<p>Status: <span style={status === 'running' ? 'color:green' : status === 'stopped' ? 'color:red' : ''}>{status}</span></p>
+<div class="buttons">
+  <button class="start control-button" on:click={() => {controlClick('start')}}>
+    <StartIcon/>
+  </button>
+  <button class="restart control-button" on:click={() => {controlClick('restart')}}>
+    <RestartIcon/>
+  </button>
+  <button class="stop control-button" on:click={() => {controlClick('stop')}}>
+    <StopIcon/>
+  </button>
+</div>
 
 <style>
   .space-w{
@@ -56,7 +86,7 @@
   .selector{
     display: flex;
   }
-  button {
+  .tab {
     background: none;
     color: inherit;
     border: none;
@@ -98,5 +128,37 @@
   }
   .space{
     height: 10px;
+  }
+  .buttons{
+    margin-top: 10px;
+  }
+  .control-button{
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 5px;
+    border-width: 2px;
+    border-style: solid;
+  }
+  .start{
+    background-color: rgb(0, 212, 0);
+    border-color: rgb(0, 150, 0);
+  }
+  .start:hover{
+    background-color: rgb(0, 255, 0);
+  }
+  .stop{
+    background-color: rgb(197, 0, 0);
+    border-color: rgb(112, 0, 0);
+  }
+  .stop:hover{
+    background-color: rgb(255, 0, 0);
+  }
+  .restart{
+    background-color: rgb(0, 102, 255);
+    border-color: rgb(0, 38, 255);
+  }
+  .restart:hover{
+    background-color: rgb(0, 162, 255);
   }
 </style>
