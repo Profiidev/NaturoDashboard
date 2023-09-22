@@ -66,7 +66,7 @@
   {/each}
   <div class="space"></div>
 </div>
-<p>Status: <span style={status === 'running' ? 'color:green' : status === 'stopped' ? 'color:red' : ''}>{status}</span></p>
+<p>Status: <span style={status === 'running' ? 'color:rgb(0, 212, 0)' : status === 'stopped' ? 'color:red' : ''}>{status}</span></p>
 <div class="buttons">
   <button class="start control-button" on:click={() => {controlClick('start')}}>
     <StartIcon/>
