@@ -14,22 +14,30 @@
   const isMinecraft: boolean = active.toLowerCase() === 'minecraft';
   
   let firstTab: string;
-  $: firstTab = tabs.shift() as string;
+  $: {
+    firstTab = tabs[0];
+    tabs = tabs.slice(1);
+    active = firstTab;
+  }
   
   const fetchData = () => {
+    if(!active) return;
     fetch('http://nacktebusen.de/api/logs', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token), app: !isMinecraft ? active.toLowerCase() : 'minecraft', server: active.toLowerCase() })
 		})
 			.then((res) => res.json())
-			.then((res) => logs = res.logs);
+			.then((res) => logs = res.logs)
+      .catch((err) => {});
 
+    if(isMinecraft) return;
     fetch('http://nacktebusen.de/api/status', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token), app: active.toLowerCase() })
 		})
 			.then((res) => res.json())
-			.then((res) => status = res.status);
+			.then((res) => status = res.status)
+      .catch((err) => {});
   }
 
   const updateData = () => {
@@ -51,7 +59,7 @@
     fetch('http://nacktebusen.de/api/control', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token), app: active.toLowerCase(), cmd: action })
-		})
+		}).catch((err) => {});
   }
 </script>
 <div class="console-container">
@@ -65,7 +73,7 @@
   <div class="console scrollbar">
     <div class="space"></div>
     {#each logs as log}
-      <p class="log">{log}</p>
+      <p class="log">{log.startsWith('> ') ? log.replace('> ', '') : log}</p>
     {/each}
     <div class="space"></div>
   </div>
