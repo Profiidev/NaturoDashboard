@@ -11,13 +11,15 @@
   export let active: string;
   let status = 'unknown';
 
+  const isMinecraft: boolean = active.toLowerCase() === 'minecraft';
+  
   let firstTab: string;
   $: firstTab = tabs.shift() as string;
   
   const fetchData = () => {
     fetch('http://nacktebusen.de/api/logs', {
 			method: 'POST',
-			body: JSON.stringify({ token: get(token), app: active.toLowerCase() })
+			body: JSON.stringify({ token: get(token), app: !isMinecraft ? active.toLowerCase() : 'minecraft', server: active.toLowerCase() })
 		})
 			.then((res) => res.json())
 			.then((res) => logs = res.logs);
