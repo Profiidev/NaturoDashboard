@@ -7,7 +7,7 @@
 {#if $currentUser}
 	<div class="content">
 		<h1>Music</h1>
-		<Console tabs={['Musicbot', 'Lavalink']} />
+		<Console tabs={['Musicbot', 'Lavalink']} active={'Musicbot'} />
 	</div>
 {:else}
 	<PleaseLogin />
