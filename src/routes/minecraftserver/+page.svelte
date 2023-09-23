@@ -1,13 +1,17 @@
 <script lang="ts">
 	import PleaseLogin from '$lib/components/PleaseLogin.svelte';
 	import Console from '$lib/components/Console.svelte';
-	import { currentUser } from '$lib/pocketbase/pocketbase';
+	import { currentUser, token } from '$lib/pocketbase/pocketbase';
 	import { onMount } from 'svelte';
+  import { get } from 'svelte/store';
 
   let servers: string[] = [];
 
   onMount(() => {
-    fetch('http://nacktebusen.de/api/servers')
+    fetch('http://nacktebusen.de/api/servers', {
+      method: 'POST',
+      body: JSON.stringify({ token: get(token) })
+    })
       .then((res) => res.json())
       .then((res) => servers = res.servers);
   });
@@ -16,7 +20,7 @@
 {#if $currentUser}
 	<div class="content">
 		<h1>Minecraft</h1>
-		<Console tabs={servers} active={'Minecraft'} />
+		<Console tabs={servers} active={'minecraft'} />
 	</div>
 {:else}
 	<PleaseLogin />

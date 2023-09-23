@@ -21,8 +21,7 @@ export const POST: RequestHandler = async (e: RequestEvent) => {
 	}
 
 	const token = body.token;
-	const app = body.app;
-	if (!token || !app) {
+	if (!token) {
 		return new Response(JSON.stringify({ message: 'Invalid Params' }), {
 			status: 400,
 			headers: headers
