@@ -9,4 +9,4 @@ git.exe push --set-upstream origin %name%
 git.exe checkout master
 pause
 git.exe branch -d %name%
-git pull
+git.exe pull

@@ -8,10 +8,11 @@
 
   export let tabs: string[];
   let logs = ["Loading..."];
-  let active = 'Musicbot';
+  export let active: string;
   let status = 'unknown';
 
-  let firstTab = tabs.shift() as string;
+  let firstTab: string;
+  $: firstTab = tabs.shift() as string;
   
   const fetchData = () => {
     fetch('http://nacktebusen.de/api/logs', {
@@ -51,35 +52,42 @@
 		})
   }
 </script>
-
-<div class="selector">
-  <button class={active === firstTab ? 'active tab' : 'tab'} on:click={() => tabClick(firstTab)}>{firstTab}</button>
-  {#each tabs as tab}
-    <div class="space-w"></div>
-    <button class={active === tab ? 'active tab' : 'tab'} on:click={() => tabClick(tab)}>{tab}</button>
-  {/each}
+<div class="console-container">
+  <div class="selector">
+    <button class={active === firstTab ? 'active tab' : 'tab'} on:click={() => tabClick(firstTab)}>{firstTab}</button>
+    {#each tabs as tab}
+      <div class="space-w"></div>
+      <button class={active === tab ? 'active tab' : 'tab'} on:click={() => tabClick(tab)}>{tab}</button>
+    {/each}
+  </div>
+  <div class="console scrollbar">
+    <div class="space"></div>
+    {#each logs as log}
+      <p class="log">{log}</p>
+    {/each}
+    <div class="space"></div>
+  </div>
+  <p>Status: <span style={status === 'running' ? 'color:rgb(0, 212, 0)' : status === 'stopped' ? 'color:red' : ''}>{status}</span></p>
+  <div class="buttons">
+    <button class="start control-button" on:click={() => {controlClick('start')}}>
+      <StartIcon/>
+    </button>
+    <button class="restart control-button" on:click={() => {controlClick('restart')}}>
+      <RestartIcon/>
+    </button>
+    <button class="stop control-button" on:click={() => {controlClick('stop')}}>
+      <StopIcon/>
+    </button>
+  </div>
 </div>
-<div class="console scrollbar">
-  <div class="space"></div>
-  {#each logs as log}
-    <p class="log">{log}</p>
-  {/each}
-  <div class="space"></div>
-</div>
-<p>Status: <span style={status === 'running' ? 'color:rgb(0, 212, 0)' : status === 'stopped' ? 'color:red' : ''}>{status}</span></p>
-<div class="buttons">
-  <button class="start control-button" on:click={() => {controlClick('start')}}>
-    <StartIcon/>
-  </button>
-  <button class="restart control-button" on:click={() => {controlClick('restart')}}>
-    <RestartIcon/>
-  </button>
-  <button class="stop control-button" on:click={() => {controlClick('stop')}}>
-    <StopIcon/>
-  </button>
-</div>
-
 <style>
+  .console-container{
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+  }
   .space-w{
     width: 50px;
   }
@@ -101,7 +109,7 @@
     border-bottom: #00b5ec solid 3px;
   }
   .console{
-    width: 75vw;
+    width: 85vw;
     height: 75vh;
     background-color: var(--navbar-color);
     border-radius: 10px;
@@ -128,9 +136,6 @@
   }
   .space{
     height: 10px;
-  }
-  .buttons{
-    margin-top: 10px;
   }
   .control-button{
     width: 40px;
