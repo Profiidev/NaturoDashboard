@@ -4,6 +4,7 @@
 	import MinecraftIcon from '$lib/components/MinecraftIcon.svelte';
 	import MusicIcon from '$lib/components/MusicIcon.svelte';
 	import NaturoIcon from '$lib/components/NaturoIcon.svelte';
+	import FactorioIcon from '$lib/components/FactorioIcon.svelte';
 	import { currentUser } from '$lib/pocketbase/pocketbase';
 </script>
 
@@ -26,6 +27,12 @@
 				<MusicIcon/>
 			</a>
 			<div class="tooltip">Music Bot</div>
+		</li>
+		<li>
+			<a href="/factorio">
+				<FactorioIcon/>
+			</a>
+			<div class="tooltip">Factorio</div>
 		</li>
 		<li class="login">
 			<a href="/login">

@@ -18,6 +18,7 @@
     firstTab = tabs[0];
     tabs = tabs.slice(1);
     active = firstTab;
+    fetchData();
   }
   
   const fetchData = () => {
