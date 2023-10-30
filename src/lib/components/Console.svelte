@@ -10,6 +10,8 @@
   let logs = ["Loading..."];
   export let active: string;
   let status = 'unknown';
+  let isAutoScroll = true;
+  let console: HTMLElement;
 
   const isMinecraft: boolean = active.toLowerCase() === 'minecraft';
   
@@ -43,6 +45,9 @@
 
   const updateData = () => {
     fetchData();
+    if(isAutoScroll) {
+      console.scroll({top: console.scrollHeight, behavior: 'smooth'});
+    }
     setTimeout(updateData, 1000);
   };
 
@@ -62,6 +67,10 @@
 			body: JSON.stringify({ token: get(token), app: active.toLowerCase(), cmd: action })
 		}).catch((err) => {});
   }
+
+  const consoleScroll = () => {
+    isAutoScroll = console.scrollTop + console.clientHeight >= console.scrollHeight;
+  }
 </script>
 <div class="console-container">
   <div class="selector">
@@ -71,7 +80,7 @@
       <button class={active === tab ? 'active tab' : 'tab'} on:click={() => tabClick(tab)}>{tab}</button>
     {/each}
   </div>
-  <div class="console scrollbar">
+  <div class="console scrollbar" bind:this={console} on:scroll={consoleScroll}>
     <div class="space"></div>
     {#each logs as log}
       <p class="log">{log.startsWith('> ') ? log.replace('> ', '') : log}</p>

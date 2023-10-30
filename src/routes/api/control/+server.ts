@@ -18,6 +18,10 @@ const cmds: any = {
 	lavalink: {
 		base: `echo ${SECRET_SSH_PASSWORD} | sudo systemctl `,
 		options: { start: 'start lavalink', stop: 'stop lavalink', restart: 'restart lavalink' }
+	},
+	fabg: {
+		base: `echo ${SECRET_SSH_PASSWORD} | sudo systemctl `,
+		options: { start: 'start factorio', stop: 'stop factorio', restart: 'restart factorio' }
 	}
 };
 
