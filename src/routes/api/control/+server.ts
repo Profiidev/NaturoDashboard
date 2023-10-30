@@ -16,11 +16,11 @@ const cmds: any = {
 		options: { start: 'start musicbot', stop: 'stop musicbot', restart: 'restart musicbot' }
 	},
 	lavalink: {
-		base: `echo ${SECRET_SSH_PASSWORD} | sudo systemctl `,
+		base: `echo ${SECRET_SSH_PASSWORD} | sudo -S systemctl `,
 		options: { start: 'start lavalink', stop: 'stop lavalink', restart: 'restart lavalink' }
 	},
 	fabg: {
-		base: `echo ${SECRET_SSH_PASSWORD} | sudo systemctl `,
+		base: `echo ${SECRET_SSH_PASSWORD} | sudo -S systemctl `,
 		options: { start: 'start factorio', stop: 'stop factorio', restart: 'restart factorio' }
 	}
 };
@@ -59,7 +59,9 @@ export const POST: RequestHandler = async (e: RequestEvent) => {
 		return new Response(JSON.stringify({}), { status: 401, headers: headers });
 	}
 	
-	exec(`${cmds[app].base}${cmds[app].options[cmd]}`, (err, output) => {});
+	exec(`${cmds[app].base}${cmds[app].options[cmd]}`, (err, output) => {
+		console.log(err);
+	});
 
 	return new Response(JSON.stringify({ message: 'Done' }), { status: 200, headers: headers });
 };
