@@ -12,7 +12,8 @@ const headers = {
 const apps: any = {
 	minecraft: '/home/Minecraft/logs/',
 	musicbot: '/home/Musikbot/Musicbot.log',
-	lavalink: '/home/Musikbot/Lavalink.log'
+	lavalink: '/home/Musikbot/Lavalink.log',
+	fabg: '/opt/factorio/factorio-current.log'
 };
 
 export const POST: RequestHandler = async (e: RequestEvent) => {
