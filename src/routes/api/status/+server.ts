@@ -43,7 +43,7 @@ export const POST: RequestHandler = async (e: RequestEvent) => {
 		return new Response(JSON.stringify({}), { status: 401, headers: headers });
 	}
 	
-	let result = execSync(`echo ${SECRET_SSH_PASSWORD} | sudo -S systemctl status ${app} | grep "Active: "`);
+	let result = execSync(`echo ${SECRET_SSH_PASSWORD} | sudo -S systemctl status ${app === 'fabg' ? 'factorio' : app} | grep "Active: "`);
 	let status = 'stopped';
 	if (result.toString().indexOf(' active ') !== -1) {
 		status = 'running';
