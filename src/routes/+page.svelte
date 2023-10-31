@@ -6,7 +6,8 @@
 	import { getConfig } from '$lib/charts/cpu';
 	import { get } from 'svelte/store';
 
-	let cpuChart: HTMLCanvasElement;
+	let cpuCanvas: HTMLCanvasElement;
+	let cpuChart: Chart;
 	let timeSteps = [10, 10];
 	let labels: number[][] = [[],[]];
 	let data: number[][] = [[],[]];
@@ -35,11 +36,12 @@
 
   const updateData = () => {
     fetchData();
-		const ctx = cpuChart.getContext('2d');
+		const ctx = cpuCanvas.getContext('2d');
 		if(ctx) {
-			let myChart = new Chart(ctx, getConfig(labels[0], data[0]));
+			cpuChart?.destroy();
+			cpuChart = new Chart(ctx, getConfig(labels[0], data[0]));
 		}
-    setTimeout(updateData, 1000);
+    setTimeout(updateData, 10000);
   };
 
 	onMount(() => {
@@ -48,7 +50,7 @@
 </script>
 
 {#if $currentUser}
-	<canvas bind:this={cpuChart} width={400} height={400}></canvas>
+	<canvas bind:this={cpuCanvas} width={400} height={400}></canvas>
 {:else}
 	<PleaseLogin />
 {/if}
