@@ -55,6 +55,8 @@
 		--navbar-color: rgb(30, 31, 34);
 		--navbar-width: 70px;
 
+		--modal-color: rgb(32, 33, 36);
+
 		--content-color: rgb(49, 51, 54);
 		font-family: 'JetBrains Mono', monospace;
 	}

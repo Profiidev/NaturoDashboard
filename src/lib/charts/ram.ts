@@ -1,18 +1,28 @@
 import type { ChartTypeRegistry } from "chart.js";
 
-export const getConfig = (labels: number[], data: number[]) => {
-  return {
+export const getConfig = (labels: number[], dataPercent: number[], dataAbsolute: number[]) => {
+	return {
 		type: 'line' as keyof ChartTypeRegistry,
 		data: {
 			labels: labels,
 			datasets: [
 				{
-					label: 'Usage',
-					data: data,
+					label: 'Usage (%)',
+					data: dataPercent,
+					fill: false,
+					borderColor: 'rgb(142, 27, 224)',
+					cubicInterpolationMode: 'monotone',
+					tension: 0.4,
+					yAxisID: 'y'
+				},
+				{
+					label: 'Usage (MB)',
+					data: dataAbsolute,
 					fill: false,
 					borderColor: 'rgb(75, 192, 192)',
 					cubicInterpolationMode: 'monotone',
-					tension: 0.4
+					tension: 0.4,
+					yAxisID: 'y1'
 				}
 			]
 		},
@@ -21,7 +31,7 @@ export const getConfig = (labels: number[], data: number[]) => {
 			plugins: {
 				title: {
 					display: true,
-					text: 'CPU Usage'
+					text: 'RAM Usage'
 				}
 			},
 			interaction: {
@@ -43,6 +53,16 @@ export const getConfig = (labels: number[], data: number[]) => {
 					},
 					suggestedMin: 0,
 					suggestedMax: 1
+				},
+				y1: {
+					display: true,
+					position: 'right',
+					title: {
+						display: true,
+						text: 'Usage in MB'
+					},
+					suggestedMin: 0,
+					suggestedMax: 5900
 				}
 			}
 		}
