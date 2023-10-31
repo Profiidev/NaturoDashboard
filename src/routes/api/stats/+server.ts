@@ -49,7 +49,7 @@ export const POST: RequestHandler = async (e: RequestEvent) => {
 	}
 	
 	const path = paths[resource];
-	let data = readFileSync(path, 'utf-8').split('\n');
+	let data = readFileSync(path, 'utf-8').replace(',', '.').split('\n');
 	let usage = data.map(Number).slice(time * -1);
 		
 	return new Response(JSON.stringify({ data: usage }), { status: 200, headers: headers });

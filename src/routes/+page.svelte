@@ -18,7 +18,7 @@
 	const fetchData = () => {
 		fetch('http://nacktebusen.de/api/stats', {
 			method: 'POST',
-			body: JSON.stringify({ token: get(token), app: 'cpu', time: timeSteps[0] })
+			body: JSON.stringify({ token: get(token), resource: 'cpu', time: timeSteps[0] })
 		})
 			.then((res) => res.json())
 			.then((res) => data[0] = res.data)
@@ -26,7 +26,7 @@
 
 		fetch('http://nacktebusen.de/api/stats', {
 			method: 'POST',
-			body: JSON.stringify({ token: get(token), app: 'ram', time: timeSteps[1] })
+			body: JSON.stringify({ token: get(token), resource: 'ram', time: timeSteps[1] })
 		})
 			.then((res) => res.json())
 			.then((res) => data[1] = res.data)
@@ -36,8 +36,9 @@
   const updateData = () => {
     fetchData();
 		const ctx = cpuChart.getContext('2d');
-		if(!ctx) return;
-		let myChart = new Chart(ctx, getConfig(labels[0], data[0]));
+		if(ctx) {
+			let myChart = new Chart(ctx, getConfig(labels[0], data[0]));
+		}
     setTimeout(updateData, 1000);
   };
 
