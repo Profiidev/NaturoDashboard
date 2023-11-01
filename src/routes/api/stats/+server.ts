@@ -64,7 +64,7 @@ export const POST: RequestHandler = async (e: RequestEvent) => {
 		});
 	} else if (resource === 'cpu') {
 		dataClean.forEach((x) => {
-			let temp = x.split(' ');
+			let temp = x.split('. ');
 			usagePercent.push(Number(temp[0]));
 		});
 	} else {
