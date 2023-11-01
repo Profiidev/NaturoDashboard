@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PleaseLogin from '$lib/components/PleaseLogin.svelte';
+	import InfoModal from '$lib/components/InfoModal.svelte';
 	import Console from '$lib/components/Console.svelte';
 	import { currentUser, token } from '$lib/pocketbase/pocketbase';
 	import { onMount } from 'svelte';
@@ -23,7 +23,7 @@
 		<Console tabs={servers} active={'minecraft'} />
 	</div>
 {:else}
-	<PleaseLogin />
+	<InfoModal message="Please Login to view this Page"/>
 {/if}
 
 <style>

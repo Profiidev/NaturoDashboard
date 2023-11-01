@@ -1,6 +1,10 @@
+<script lang="ts">
+  export let message: string;
+</script>
+
 <div class="flex-container">
 	<div class="info-container">
-		<p>Please Login to view this Page</p>
+		<p>{message}</p>
 	</div>
 </div>
 
@@ -15,7 +19,7 @@
   }
   .info-container{
     background-color: var(--navbar-color);
-    width: 500px;
+    width: 600px;
     height: 80px;
     border-radius: 12px;
     margin-top: 60px;
