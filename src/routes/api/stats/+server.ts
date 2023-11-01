@@ -62,6 +62,11 @@ export const POST: RequestHandler = async (e: RequestEvent) => {
 			usagePercent.push(Number(temp[0]));
 			usageAbsolute.push(Number(temp[1]));
 		});
+	} else if (resource === 'cpu') {
+		dataClean.forEach((x) => {
+			let temp = x.split(' ');
+			usagePercent.push(Number(temp[0]));
+		});
 	} else {
 		usagePercent = dataClean.map(Number).map(x => x / 2);
 	}
