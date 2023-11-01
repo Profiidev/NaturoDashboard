@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PleaseLogin from '$lib/components/PleaseLogin.svelte';
+	import InfoModal from '$lib/components/InfoModal.svelte';
 	import { currentUser, token } from '$lib/pocketbase/pocketbase';
 	import { onMount } from 'svelte';
 	import Chart from 'chart.js/auto';
@@ -72,7 +72,7 @@
 		</div>
 	</div>
 {:else}
-	<PleaseLogin />
+	<InfoModal message="Please Login to view this Page"/>
 {/if}
 
 <style>

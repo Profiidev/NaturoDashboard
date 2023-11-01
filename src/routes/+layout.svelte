@@ -5,7 +5,18 @@
 	import MusicIcon from '$lib/components/MusicIcon.svelte';
 	import NaturoIcon from '$lib/components/NaturoIcon.svelte';
 	import FactorioIcon from '$lib/components/FactorioIcon.svelte';
-	import { currentUser } from '$lib/pocketbase/pocketbase';
+	import { currentUser, isValid, pb } from '$lib/pocketbase/pocketbase';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { get } from 'svelte/store';
+
+	onMount(() => {
+		if(!get(isValid) && window.location.pathname !== '/login') {
+			pb.authStore.clear();
+			goto('/login');
+			return;
+		}
+	})
 </script>
 
 <div class="navbar-back">

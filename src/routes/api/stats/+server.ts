@@ -49,19 +49,21 @@ export const POST: RequestHandler = async (e: RequestEvent) => {
 	}
 	
 	const path = paths[resource];
-	let data = readFileSync(path, 'utf-8').replace(/\r/g, '').replace(/,/g, '.').split('\n');
+	let data = readFileSync(path, 'utf-8').split('\n');
 	data.pop();
+	let dataClean = data.slice(time * -1).map((x) => x.replace(/\r/g, '').replace(/,/g, '.'));
+
 	let usagePercent: number[] = [];
 	let usageAbsolute: number[] = [];
 
 	if (resource === 'ram') {
-		data.forEach(x => {
+		dataClean.forEach((x) => {
 			let temp = x.split(' ');
 			usagePercent.push(Number(temp[0]));
 			usageAbsolute.push(Number(temp[1]));
 		});
 	} else {
-		usagePercent = data.map(Number).slice(time * -1);
+		usagePercent = dataClean.map(Number).map(x => x / 2);
 	}
 
 	return new Response(JSON.stringify({ data: usagePercent, data2: usageAbsolute }), {

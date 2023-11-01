@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PleaseLogin from '$lib/components/PleaseLogin.svelte';
+	import InfoModal from '$lib/components/InfoModal.svelte';
 	import Console from '$lib/components/Console.svelte';
 	import { currentUser } from '$lib/pocketbase/pocketbase';
 </script>
@@ -10,7 +10,7 @@
 		<Console tabs={['Musicbot', 'Lavalink']} active={'Musicbot'} />
 	</div>
 {:else}
-	<PleaseLogin />
+	<InfoModal message="Please Login to view this Page"/>
 {/if}
 
 <style>
