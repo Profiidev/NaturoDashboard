@@ -12,15 +12,19 @@
 	let ramCanvas: HTMLCanvasElement;
 	let ramChart: Chart;
 	let timeSteps = [10, 10];
-	let labels: number[][] = [[],[]];
-	let data: number[][] = [[],[],[]];
+	let labels: number[][] = [[], []];
+	let data: number[][] = [[], [], []];
 	$: {
-		labels[0] = Array.from(Array(timeSteps[0]).keys()).reverse().map((x) => x * -1);
-		labels[1] = Array.from(Array(timeSteps[1]).keys()).reverse().map((x) => x * -1);
+		labels[0] = Array.from(Array(timeSteps[0]).keys())
+			.reverse()
+			.map((x) => x * -1);
+		labels[1] = Array.from(Array(timeSteps[1]).keys())
+			.reverse()
+			.map((x) => x * -1);
 	}
 
 	const fetchData = () => {
-		fetch('http://212.87.212.2/api/stats', {
+		fetch('http://nacktebusen.de/api/stats', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token), resource: 'cpu', time: timeSteps[0] })
 		})
@@ -28,14 +32,14 @@
 			.then((res) => {
 				data[0] = res.data;
 				const ctx = cpuCanvas.getContext('2d');
-				if(ctx) {
+				if (ctx) {
 					cpuChart?.destroy();
 					cpuChart = new Chart(ctx, getCPUConfig(labels[0], data[0]));
 				}
 			})
 			.catch((err) => {});
 
-		fetch('http://212.87.212.2/api/stats', {
+		fetch('http://nacktebusen.de/api/stats', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token), resource: 'ram', time: timeSteps[1] })
 		})
@@ -44,35 +48,35 @@
 				data[1] = res.data;
 				data[2] = res.data2;
 				const ctx = ramCanvas.getContext('2d');
-				if(ctx) {
+				if (ctx) {
 					ramChart?.destroy();
 					ramChart = new Chart(ctx, getRAMConfig(labels[1], data[1], data[2]));
 				}
 			})
 			.catch((err) => {});
-  }
+	};
 
-  const updateData = () => {
-		if(window.location.pathname === '/') fetchData();
-    setTimeout(updateData, 60000);
-  };
+	const updateData = () => {
+		if (window.location.pathname === '/') fetchData();
+		setTimeout(updateData, 60000);
+	};
 
 	onMount(() => {
 		updateData();
-	})
+	});
 </script>
 
 {#if $currentUser}
 	<div class="container scrollbar">
 		<div class="cpu-container">
-			<canvas bind:this={cpuCanvas} width={400} height={400}></canvas>
+			<canvas bind:this={cpuCanvas} width={400} height={400} />
 		</div>
 		<div class="ram-container">
-			<canvas bind:this={ramCanvas} width={410} height={400}></canvas>
+			<canvas bind:this={ramCanvas} width={410} height={400} />
 		</div>
 	</div>
 {:else}
-	<InfoModal message="Please Login to view this Page"/>
+	<InfoModal message="Please Login to view this Page" />
 {/if}
 
 <style>
