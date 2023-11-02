@@ -67,8 +67,9 @@ export const POST: RequestHandler = async (e: RequestEvent) => {
 			let temp = x.split('. ');
 			usagePercent.push(Number(temp[0]));
 		});
+		usagePercent = usagePercent.map((x) => x / 2);
 	} else {
-		usagePercent = dataClean.map(Number).map(x => x / 2);
+		usagePercent = dataClean.map(Number);
 	}
 
 	return new Response(JSON.stringify({ data: usagePercent, data2: usageAbsolute }), {
