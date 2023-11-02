@@ -3,18 +3,18 @@
 	import Console from '$lib/components/Console.svelte';
 	import { currentUser, token } from '$lib/pocketbase/pocketbase';
 	import { onMount } from 'svelte';
-  import { get } from 'svelte/store';
+	import { get } from 'svelte/store';
 
-  let servers: string[] = [];
+	let servers: string[] = [];
 
-  onMount(() => {
-    fetch('http://212.87.212.2/api/servers', {
-      method: 'POST',
-      body: JSON.stringify({ token: get(token) })
-    })
-      .then((res) => res.json())
-      .then((res) => servers = res.servers);
-  });
+	onMount(() => {
+		fetch('http://nacktebusen.de/api/servers', {
+			method: 'POST',
+			body: JSON.stringify({ token: get(token) })
+		})
+			.then((res) => res.json())
+			.then((res) => (servers = res.servers));
+	});
 </script>
 
 {#if $currentUser}
@@ -23,7 +23,7 @@
 		<Console tabs={servers} active={'minecraft'} route={'/minecraftserver'} />
 	</div>
 {:else}
-	<InfoModal message="Please Login to view this Page"/>
+	<InfoModal message="Please Login to view this Page" />
 {/if}
 
 <style>
