@@ -2,16 +2,15 @@
   import { token } from "$lib/pocketbase/pocketbase";
   import { get } from "svelte/store";
 	import { onMount } from "svelte";
-	import StartIcon from "./StartIcon.svelte";
-  import StopIcon from "./StopIcon.svelte";
-  import RestartIcon from "./RestartIcon.svelte";
+  import Icon from "./Icon.svelte";
 
+  export let route: string;
   export let tabs: string[];
   let logs = ["Loading..."];
   export let active: string;
   let status = 'unknown';
   let isAutoScroll = true;
-  let console: HTMLElement;
+  let consoleContainer: HTMLElement;
 
   const isMinecraft: boolean = active.toLowerCase() === 'minecraft';
   
@@ -25,16 +24,21 @@
   
   const fetchData = () => {
     if(!active) return;
-    fetch('http://nacktebusen.de/api/logs', {
+    fetch('http://212.87.212.2/api/logs', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token), app: !isMinecraft ? active.toLowerCase() : 'minecraft', server: active.toLowerCase() })
 		})
 			.then((res) => res.json())
-			.then((res) => logs = res.logs)
+			.then((res) => {
+        logs = res.logs;
+        if(isAutoScroll) {
+          consoleContainer.scroll({top: consoleContainer.scrollHeight, behavior: 'smooth'});
+        }
+      })
       .catch((err) => {});
 
     if(isMinecraft) return;
-    fetch('http://nacktebusen.de/api/status', {
+    fetch('http://212.87.212.2/api/status', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token), app: active.toLowerCase() })
 		})
@@ -44,9 +48,9 @@
   }
 
   const updateData = () => {
-    fetchData();
+    if(window.location.pathname === route) fetchData();
     if(isAutoScroll) {
-      console.scroll({top: console.scrollHeight, behavior: 'smooth'});
+      consoleContainer.scroll({top: consoleContainer.scrollHeight, behavior: 'smooth'});
     }
     setTimeout(updateData, 1000);
   };
@@ -62,14 +66,14 @@
   }
 
   const controlClick = (action: string) => {
-    fetch('http://nacktebusen.de/api/control', {
+    fetch('http://212.87.212.2/api/control', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token), app: active.toLowerCase(), cmd: action })
 		}).catch((err) => {});
   }
 
   const consoleScroll = () => {
-    isAutoScroll = console.scrollTop + console.clientHeight >= console.scrollHeight;
+    isAutoScroll = consoleContainer.scrollTop + consoleContainer.clientHeight >= consoleContainer.scrollHeight;
   }
 </script>
 <div class="console-container">
@@ -80,7 +84,7 @@
       <button class={active === tab ? 'active tab' : 'tab'} on:click={() => tabClick(tab)}>{tab}</button>
     {/each}
   </div>
-  <div class="console scrollbar" bind:this={console} on:scroll={consoleScroll}>
+  <div class="console scrollbar" bind:this={consoleContainer} on:scroll={consoleScroll}>
     <div class="space"></div>
     {#each logs as log}
       <p class="log">{log.startsWith('> ') ? log.replace('> ', '') : log}</p>
@@ -90,13 +94,13 @@
   <p>Status: <span style={status === 'running' ? 'color:rgb(0, 212, 0)' : status === 'stopped' ? 'color:red' : ''}>{status}</span></p>
   <div class="buttons">
     <button class="start control-button" on:click={() => {controlClick('start')}}>
-      <StartIcon/>
+      <Icon icon='Start'/>
     </button>
     <button class="restart control-button" on:click={() => {controlClick('restart')}}>
-      <RestartIcon/>
+      <Icon icon='Restart'/>
     </button>
     <button class="stop control-button" on:click={() => {controlClick('stop')}}>
-      <StopIcon/>
+      <Icon icon='Stop'/>
     </button>
   </div>
 </div>
@@ -135,19 +139,6 @@
     border-radius: 10px;
     overflow-y: auto;
     word-wrap: break-word;
-  }
-  .scrollbar::-webkit-scrollbar {
-      width: 12px;
-  }
-  .scrollbar::-webkit-scrollbar-track {
-      border-radius: 8px;
-      background-color: #e7e7e7;
-      border: 1px solid #cacaca;
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-  }
-  .scrollbar::-webkit-scrollbar-thumb {
-      border-radius: 8px;
-      background-color: #363636;
   }
   .log{
     color: rgb(215, 216, 223);

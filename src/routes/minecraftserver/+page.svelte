@@ -8,7 +8,7 @@
   let servers: string[] = [];
 
   onMount(() => {
-    fetch('http://nacktebusen.de/api/servers', {
+    fetch('http://212.87.212.2/api/servers', {
       method: 'POST',
       body: JSON.stringify({ token: get(token) })
     })
@@ -20,7 +20,7 @@
 {#if $currentUser}
 	<div class="content">
 		<h1>Minecraft</h1>
-		<Console tabs={servers} active={'minecraft'} />
+		<Console tabs={servers} active={'minecraft'} route={'/minecraftserver'} />
 	</div>
 {:else}
 	<InfoModal message="Please Login to view this Page"/>

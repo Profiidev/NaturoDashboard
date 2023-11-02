@@ -7,7 +7,7 @@
 {#if $currentUser}
 	<div class="content">
 		<h1>Factorio</h1>
-		<Console tabs={['FABG']} active={'FABG'} />
+		<Console tabs={['FABG']} active={'FABG'} route={'/factorio'} />
 	</div>
 {:else}
 	<InfoModal message="Please Login to view this Page"/>

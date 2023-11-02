@@ -1,10 +1,6 @@
 <script lang="ts">
-	import LoginIcon from '$lib/components/LoginIcon.svelte';
-	import LogoutIcon from '$lib/components/LogoutIcon.svelte';
-	import MinecraftIcon from '$lib/components/MinecraftIcon.svelte';
-	import MusicIcon from '$lib/components/MusicIcon.svelte';
-	import NaturoIcon from '$lib/components/NaturoIcon.svelte';
-	import FactorioIcon from '$lib/components/FactorioIcon.svelte';
+	import NavIcon from '$lib/components/NavIcon.svelte';
+	import Icon from '$lib/components/Icon.svelte';
 	import { currentUser, isValid, pb } from '$lib/pocketbase/pocketbase';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -23,34 +19,34 @@
 	<ul class="navbar">
 		<li>
 			<a href="/">
-				<NaturoIcon/>
+				<NavIcon icon='Naturo'/>
 			</a>
 			<div class="tooltip">Dashboard</div>
 		</li>
 		<li>
 			<a href="/minecraftserver">
-				<MinecraftIcon/>
+				<NavIcon icon='Minecraft'/>
 			</a>
 			<div class="tooltip">Minecraft Server</div>
 		</li>
 		<li>
 			<a href="/musicbot">
-				<MusicIcon/>
+				<NavIcon icon='Music'/>
 			</a>
 			<div class="tooltip">Music Bot</div>
 		</li>
 		<li>
 			<a href="/factorio">
-				<FactorioIcon/>
+				<NavIcon icon='Factorio'/>
 			</a>
 			<div class="tooltip">Factorio</div>
 		</li>
 		<li class="login">
 			<a href="/login">
 				{#if $currentUser}
-					<LogoutIcon/>
+					<Icon icon='Logout'/>
 				{:else}
-					<LoginIcon/>
+					<Icon icon='Login'/>
 				{/if}
 			</a>
 			<div class="tooltip">Log {$currentUser ? 'out' : 'in'}</div>
@@ -71,7 +67,20 @@
 		--content-color: rgb(49, 51, 54);
 		font-family: 'JetBrains Mono', monospace;
 	}
-
+	:global(.scrollbar::-webkit-scrollbar) {
+      width: 12px;
+  }
+  :global(.scrollbar::-webkit-scrollbar-track) {
+      border-radius: 8px;
+      background-color: #e7e7e7;
+      border: 1px solid #cacaca;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  }
+  :global(.scrollbar::-webkit-scrollbar-thumb) {
+      border-radius: 8px;
+      background-color: #363636;
+  }
+	
 	.navbar-back {
 		height: 100vh;
 		width: var(--navbar-width);

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import NaturoIcon from '$lib/assets/FactorioIcon.png';
+  export let icon: string;
 </script>
 
 <div>
-	<img draggable="false" src={NaturoIcon} alt="" />
+	<img draggable="false" src={`src/lib/assets/${icon}Icon.png`} alt="" />
 </div>
 
 <style>

@@ -20,7 +20,7 @@
 	}
 
 	const fetchData = () => {
-		fetch('http://nacktebusen.de/api/stats', {
+		fetch('http://212.87.212.2/api/stats', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token), resource: 'cpu', time: timeSteps[0] })
 		})
@@ -35,7 +35,7 @@
 			})
 			.catch((err) => {});
 
-		fetch('http://nacktebusen.de/api/stats', {
+		fetch('http://212.87.212.2/api/stats', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token), resource: 'ram', time: timeSteps[1] })
 		})
@@ -53,7 +53,7 @@
   }
 
   const updateData = () => {
-    fetchData();
+		if(window.location.pathname === '/') fetchData();
     setTimeout(updateData, 60000);
   };
 
@@ -63,7 +63,7 @@
 </script>
 
 {#if $currentUser}
-	<div class="container">
+	<div class="container scrollbar">
 		<div class="cpu-container">
 			<canvas bind:this={cpuCanvas} width={400} height={400}></canvas>
 		</div>
@@ -81,6 +81,9 @@
 		flex-direction: row;
 		flex-wrap: wrap;
 		gap: 50px;
+		overflow: auto;
+		height: 100vh;
+		width: calc(100vw - var(--navbar-width));
 	}
 	.cpu-container {
 		position: relative;
