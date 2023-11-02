@@ -1,9 +1,9 @@
 <script lang="ts">
-  import RestartIcon from '$lib/assets/RestartIcon.png';
+  export let icon: string;
 </script>
 
 <div>
-  <img draggable="false" src={RestartIcon} alt="">
+  <img draggable="false" src={`src/lib/assets/${icon}Icon.png`} alt="">
 </div>
 
 <style>
