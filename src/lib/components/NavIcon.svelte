@@ -1,9 +1,16 @@
 <script lang="ts">
+	import { onMount } from "svelte";
+
   export let icon: string;
+	let path: string;
+
+  onMount(async () => {
+    path = (await import(`$lib/assets/${icon}Icon.png`)).default;
+  })
 </script>
 
 <div>
-	<img draggable="false" src={`src/lib/assets/${icon}Icon.png`} alt="" />
+	<img draggable="false" src={path} alt="" />
 </div>
 
 <style>
