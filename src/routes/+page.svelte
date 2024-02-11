@@ -24,7 +24,7 @@
 	}
 
 	const fetchData = () => {
-		fetch('http://nacktebusen.de/api/stats', {
+		fetch('https://profidev.io/api/stats', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token), resource: 'cpu', time: timeSteps[0] })
 		})
@@ -39,7 +39,7 @@
 			})
 			.catch((err) => {});
 
-		fetch('http://nacktebusen.de/api/stats', {
+		fetch('https://profidev.io/api/stats', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token), resource: 'ram', time: timeSteps[1] })
 		})
