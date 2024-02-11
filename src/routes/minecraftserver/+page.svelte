@@ -8,7 +8,7 @@
 	let servers: string[] = [];
 
 	onMount(() => {
-		fetch('http://nacktebusen.de/api/servers', {
+		fetch('https://profidev.io/api/servers', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token) })
 		})

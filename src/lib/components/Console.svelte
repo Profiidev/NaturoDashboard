@@ -24,7 +24,7 @@
 
 	const fetchData = () => {
 		if (!active) return;
-		fetch('http://nacktebusen.de/api/logs', {
+		fetch('https://profidev.io/api/logs', {
 			method: 'POST',
 			body: JSON.stringify({
 				token: get(token),
@@ -42,7 +42,7 @@
 			.catch((err) => {});
 
 		if (isMinecraft) return;
-		fetch('http://nacktebusen.de/api/status', {
+		fetch('https://profidev.io/api/status', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token), app: active.toLowerCase() })
 		})
@@ -70,7 +70,7 @@
 	};
 
 	const controlClick = (action: string) => {
-		fetch('http://nacktebusen.de/api/control', {
+		fetch('https://profidev.io/api/control', {
 			method: 'POST',
 			body: JSON.stringify({ token: get(token), app: active.toLowerCase(), cmd: action })
 		}).catch((err) => {});
